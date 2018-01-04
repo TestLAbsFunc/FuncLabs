@@ -10,6 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChangePhone {
+
+    public static class ReadFile {
+        public String[] readLines(String filename) throws IOException {
+            FileReader fileReader = new FileReader(filename);
+
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            List<String> lines = new ArrayList<String>();
+            String line = null;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                lines.add(line);
+            }
+
+            bufferedReader.close();
+
+            return lines.toArray(new String[lines.size()]);
+        }
+    }
     public static boolean checkWithRegExp(String PhoneString){
         Pattern p = Pattern.compile("^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{10}$");
         Matcher m = p.matcher(PhoneString);
@@ -71,6 +89,26 @@ public class ChangePhone {
     }
 
     public static void main(String[] args){
+        ReadFile rf = new ReadFile();
+
+        // The text file location of your choice
+        String filename = "c:/tmp/example.txt";
+
+        try
+        {
+            String[] lines = rf.readLines(filename);
+
+            for (String line : lines)
+            {
+
+                System.out.println(ConcatString(ReplaceStringList(line)));
+            }
+        }
+        catch(IOException e)
+        {
+            // Print out the exception that occurred
+            System.out.println("Unable to create "+filename+": "+e.getMessage());
+        }
 
        }
 
